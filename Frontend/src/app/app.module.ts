@@ -13,12 +13,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalAddFilmComponent } from './modal-add-film/modal-add-film.component';
+import { DirectorComponent } from './director/director.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FilmComponent,
-    ModalAddFilmComponent
+    ModalAddFilmComponent,
+    DirectorComponent
   ],
   imports: [
     BrowserModule,
