@@ -1,9 +1,6 @@
 package com.example.DvdManager.DvdManager.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +14,7 @@ import java.util.Set;
  */
 
 @Entity
+@Table(name = "directors")
 @Getter @Setter @NoArgsConstructor
 public class Director {
 
@@ -28,7 +26,8 @@ public class Director {
     private String lastName;
     private String country;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "director")
     private Set<Film> films;
+
 
 }

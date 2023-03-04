@@ -6,9 +6,10 @@ package com.example.DvdManager.DvdManager.dto;
  * Dit is wat het programma doet.
  */
 public record DirectorDTO(
+
         Long directorId,
         String firstname,
         String lastname,
         String country
-) {
+    ){
 }
