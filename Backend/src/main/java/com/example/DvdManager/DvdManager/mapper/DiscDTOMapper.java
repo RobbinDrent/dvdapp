@@ -19,10 +19,21 @@ public class DiscDTOMapper implements Function<Disc, DiscDTO> {
 
     @Override
     public DiscDTO apply(Disc disc) {
-        return null;
+        return new DiscDTO(
+                disc.getDiscId(),
+                disc.getFilm().getFilmId(),
+                disc.getFilm().getTitle(),
+                disc.getFilm().getDirector().getFirstName(),
+                disc.getFilm().getDirector().getLastName(),
+                disc.getFormat(),
+                disc.getDistributor()
+        );
     }
+
+
     public Disc toDisc(DiscDTO discDTO) {
         Disc disc = new Disc();
+        disc.setFormat(discDTO.format());
         disc.setDistributor(discDTO.distributor());
         return disc;
     }

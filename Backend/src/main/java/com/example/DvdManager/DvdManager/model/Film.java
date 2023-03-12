@@ -30,7 +30,7 @@ public class Film {
     @ManyToOne
     private Director director;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "film")
     private List<Disc> discs;
 
 //    public void addDirector(Director director) {

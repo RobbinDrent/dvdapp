@@ -11,7 +11,11 @@ import java.util.List;
  */
 public record DiscDTO (
         Long discId,
+        Long filmId,
         String filmTitle,
+        String filmDirectorFirstName,
+        String filmDirectorLastName,
+        String format,
         String distributor
 ) {
 }

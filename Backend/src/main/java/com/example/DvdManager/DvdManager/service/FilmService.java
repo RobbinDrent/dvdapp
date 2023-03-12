@@ -4,6 +4,7 @@ import com.example.DvdManager.DvdManager.dto.FilmDTO;
 import com.example.DvdManager.DvdManager.exception.FilmNotFoundException;
 import com.example.DvdManager.DvdManager.mapper.FilmDTOMapper;
 import com.example.DvdManager.DvdManager.model.Director;
+import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,18 @@ public class FilmService {
         System.out.println("adddirectortofilm: " + director.getLastName());
         film.setDirector(director);
         directorService.addFilmToDirector(director, film);
+        filmRepository.save(film);
+    }
+
+    public List<FilmDTO> findFilmsByDirector(Director director) {
+        return filmRepository.findFilmsByDirector(director)
+                .stream()
+                .map(filmDTOMapper)
+                .toList();
+    }
+
+    public void addDiscToFilm(Disc disc, Film film) {
+        film.getDiscs().add(disc);
         filmRepository.save(film);
     }
 }

@@ -22,6 +22,7 @@ public class Disc {
     @GeneratedValue
     private Long discId;
     private String distributor;
+    private String format;
     @ManyToOne
     private Film film;
 }
