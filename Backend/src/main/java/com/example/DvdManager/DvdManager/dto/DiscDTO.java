@@ -1,6 +1,8 @@
 package com.example.DvdManager.DvdManager.dto;
 
 import com.example.DvdManager.DvdManager.model.Director;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import java.util.List;
 
@@ -12,10 +14,8 @@ import java.util.List;
 public record DiscDTO (
         Long discId,
         Long filmId,
-        String filmTitle,
-        String filmDirectorFirstName,
-        String filmDirectorLastName,
         String format,
-        String distributor
+        String distributor,
+        String filmTitle
 ) {
 }

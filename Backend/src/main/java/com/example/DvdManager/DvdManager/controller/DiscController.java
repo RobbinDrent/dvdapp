@@ -1,6 +1,7 @@
 package com.example.DvdManager.DvdManager.controller;
 
 import com.example.DvdManager.DvdManager.dto.DiscDTO;
+import com.example.DvdManager.DvdManager.mapper.DiscDTOMapper;
 import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.service.DiscService;
@@ -25,6 +26,7 @@ import java.util.List;
 public class DiscController {
 
     private final DiscService discService;
+    private final DiscDTOMapper discDTOMapper;
 
     @GetMapping("/all")
     public ResponseEntity<List<DiscDTO>> getAllDiscs() {
@@ -34,17 +36,27 @@ public class DiscController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addDisc(@RequestBody DiscDTO discDTO, BindingResult result) {
-        Disc disc = new Disc();
         if (!result.hasErrors()) {
             discService.addDisc(discDTO);
         }
-        discService.addFilmtoDisc(discDTO.filmId(), disc);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/film/{filmId}")
-    public ResponseEntity<List<DiscDTO>> getDiscsOfMovie (@PathVariable("filmdId") Film film) {
-        List<DiscDTO> discs = discService.getDisOfMovie(film);
+    public ResponseEntity<List<DiscDTO>> getDiscsOfMovie(@PathVariable("filmdId") Film film) {
+        List<DiscDTO> discs = discService.getDiscsOfMovie(film);
         return new ResponseEntity<>(discs, HttpStatus.OK);
+    }
+
+    @GetMapping("/{discId}")
+    public ResponseEntity<DiscDTO> getDiscById(@PathVariable("discId") Long discId) {
+        DiscDTO disc = discDTOMapper.apply(discService.getDiscById(discId));
+        return new ResponseEntity<>(disc, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{discId}")
+    public ResponseEntity<String> deleteDisc(@PathVariable("discId") Long discId) {
+        discService.deleteDisc(discId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

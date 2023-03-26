@@ -11,6 +11,7 @@ public record FilmDTO (
     Long filmId,
     String title,
     Long directorId,
+    int releaseYear,
     String directorFirstName,
     String directorLastName,
     String displayTitle

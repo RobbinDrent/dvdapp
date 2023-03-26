@@ -5,6 +5,8 @@ import com.example.DvdManager.DvdManager.dto.FilmDTO;
 import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.repository.FilmRepository;
+import com.example.DvdManager.DvdManager.service.FilmService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
@@ -14,27 +16,29 @@ import java.util.function.Function;
  * <p>
  * Dit is wat het programma doet.
  */
-@Service
+@Service @RequiredArgsConstructor
 public class DiscDTOMapper implements Function<Disc, DiscDTO> {
+
+
+    private final FilmService filmService;
 
     @Override
     public DiscDTO apply(Disc disc) {
         return new DiscDTO(
                 disc.getDiscId(),
                 disc.getFilm().getFilmId(),
-                disc.getFilm().getTitle(),
-                disc.getFilm().getDirector().getFirstName(),
-                disc.getFilm().getDirector().getLastName(),
                 disc.getFormat(),
-                disc.getDistributor()
+                disc.getDistributor(),
+                disc.getFilm().getTitle()
         );
     }
 
-
     public Disc toDisc(DiscDTO discDTO) {
-        Disc disc = new Disc();
-        disc.setFormat(discDTO.format());
-        disc.setDistributor(discDTO.distributor());
-        return disc;
+        return new Disc(
+                discDTO.discId(),
+                discDTO.distributor(),
+                discDTO.format(),
+                filmService.findFilmById(discDTO.filmId())
+        );
     }
 }

@@ -6,6 +6,7 @@ import com.example.DvdManager.DvdManager.mapper.FilmDTOMapper;
 import com.example.DvdManager.DvdManager.model.Director;
 import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
+import com.example.DvdManager.DvdManager.repository.DiscRepository;
 import com.example.DvdManager.DvdManager.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,27 +25,22 @@ public class FilmService {
     private final FilmRepository filmRepository;
     private final FilmDTOMapper filmDTOMapper;
     private final DirectorService directorService;
+    private final DiscRepository discRepository;
 
     @Autowired
-    public FilmService(FilmRepository filmRepository, FilmDTOMapper filmDTOMapper, DirectorService directorService) {
+    public FilmService(FilmRepository filmRepository, FilmDTOMapper filmDTOMapper, DirectorService directorService, DiscRepository discRepository) {
         this.filmRepository = filmRepository;
         this.filmDTOMapper = filmDTOMapper;
         this.directorService = directorService;
+        this.discRepository = discRepository;
     }
 
     public Film addFilm(FilmDTO filmDTO) {
         Film film = filmDTOMapper.toFilm(filmDTO);
 
-//        Director director = directorService.findDirectorByDirectorId(film.getDirectors());
         film.setDisplayTitle();
-//        film.addDirector(director);
-//        director.getFilms().add(film);
         filmRepository.save(film);
         return film;
-//        for (Director director : film.getDirectors()) {
-//            System.out.println(director);
-//
-//        }
     }
 
     public List<FilmDTO> findAllFilms() {
@@ -59,7 +55,6 @@ public class FilmService {
     }
 
     public Film findFilmById(Long filmId) {
-        System.out.println("filmid: " + filmId);
         Film film =  filmRepository.findById(filmId).orElseThrow(() ->
         new FilmNotFoundException("Film met id " + filmId + " niet gevonden."));
         film.setDisplayTitle();

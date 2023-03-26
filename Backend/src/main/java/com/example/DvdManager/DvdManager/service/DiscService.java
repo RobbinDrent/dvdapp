@@ -1,10 +1,12 @@
 package com.example.DvdManager.DvdManager.service;
 
 import com.example.DvdManager.DvdManager.dto.DiscDTO;
+import com.example.DvdManager.DvdManager.exception.DiscNotFoundException;
 import com.example.DvdManager.DvdManager.mapper.DiscDTOMapper;
 import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.repository.DiscRepository;
+import com.example.DvdManager.DvdManager.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,14 @@ public class DiscService {
     private final DiscDTOMapper discDTOMapper;
     private final FilmService filmService;
 
+    private final FilmRepository filmRepository;
+
     @Autowired
-    public DiscService(DiscRepository discRepository, DiscDTOMapper discDTOMapper, FilmService filmService) {
+    public DiscService(DiscRepository discRepository, DiscDTOMapper discDTOMapper, FilmService filmService, FilmRepository filmRepository) {
         this.discRepository = discRepository;
         this.discDTOMapper = discDTOMapper;
         this.filmService = filmService;
+        this.filmRepository = filmRepository;
     }
 
    public List<DiscDTO> findAllDiscs() {
@@ -36,17 +41,12 @@ public class DiscService {
                 .toList();
    }
 
-   public Disc addDisc(DiscDTO discDTO) {
+   public void addDisc(DiscDTO discDTO) {
         Disc disc = discDTOMapper.toDisc(discDTO);
-       System.out.println(disc.getDiscId());
-       System.out.println(disc.getDistributor());
-       System.out.println(disc.getFormat());
-       System.out.println(disc.getFilm().getTitle());
-       discRepository.save(disc);
-        return disc;
+        discRepository.save(disc);
    }
 
-   public List<DiscDTO> getDisOfMovie(Film film) {
+   public List<DiscDTO> getDiscsOfMovie(Film film) {
        return discRepository.findDiscsByFilm(film)
                .stream()
                .map(discDTOMapper)
@@ -56,7 +56,18 @@ public class DiscService {
     public void addFilmtoDisc(Long filmId, Disc disc) {
         Film film = filmService.findFilmById(filmId);
         disc.setFilm(film);
-        filmService.addDiscToFilm(disc, film);
         discRepository.save(disc);
+        filmService.addDiscToFilm(disc, film);
+    }
+
+    public Disc getDiscById(Long discId) {
+        Disc disc = discRepository.findById(discId).orElseThrow(() ->
+                new DiscNotFoundException("Disc with id " + discId + " niet gevonden."));
+        return disc;
+
+    }
+
+    public void deleteDisc(Long discId) {
+        discRepository.deleteById(discId);
     }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +16,7 @@ import lombok.Setter;
  */
 
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Disc {
 
     @Id
@@ -25,4 +26,13 @@ public class Disc {
     private String format;
     @ManyToOne
     private Film film;
+
+    public Disc(String distributor, String format, Film film) {
+        this.distributor = distributor;
+        this.format = format;
+        this.film = film;
+
+    }
+
+
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +28,7 @@ public class Director {
     private String country;
 
     @OneToMany(mappedBy = "director")
-    private Set<Film> films;
+    private List<Film> films;
 
 
 }

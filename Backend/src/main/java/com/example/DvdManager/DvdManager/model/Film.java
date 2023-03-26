@@ -25,18 +25,15 @@ public class Film {
 
     private String title;
 
+    private int releaseYear;
+
     private String displayTitle;
 
     @ManyToOne
     private Director director;
 
-    @OneToMany(mappedBy = "film")
+    @ManyToMany
     private List<Disc> discs;
-
-//    public void addDirector(Director director) {
-//        directors.add(director);
-//        director.getFilms().add(this);
-//    }
 
     public void setDisplayTitle () {
         String tempString = this.title;
@@ -57,12 +54,4 @@ public class Film {
         }
         this.displayTitle = tempString;
     }
-//    public String allDirectorsToString() {
-//        String allDirectors = "";
-//        for (Director director : directors) {
-//            allDirectors += director.getFirstName() + " " + director.getLastName() + "<br />";
-//        }
-//        return allDirectors;
-//
-//    }
 }

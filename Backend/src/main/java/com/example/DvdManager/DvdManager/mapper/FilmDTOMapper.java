@@ -21,13 +21,13 @@ import java.util.function.Function;
 @Service
 public class FilmDTOMapper implements Function<Film, FilmDTO> {
 
-    DirectorDTOMapper directorDTOMapper;
     @Override
     public FilmDTO apply(Film film) {
         return new FilmDTO(
                 film.getFilmId(),
                 film.getTitle(),
                 film.getDirector().getDirectorId(),
+                film.getReleaseYear(),
                 film.getDirector().getFirstName(),
                 film.getDirector().getLastName(),
                 film.getDisplayTitle()
@@ -36,7 +36,9 @@ public class FilmDTOMapper implements Function<Film, FilmDTO> {
 
     public Film toFilm(FilmDTO filmDTO) {
         Film film = new Film();
+        film.setFilmId(filmDTO.filmId());
         film.setTitle(filmDTO.title());
+        film.setReleaseYear(filmDTO.releaseYear());
         return film;
     }
 }
