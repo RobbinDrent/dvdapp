@@ -6,6 +6,7 @@ import com.example.DvdManager.DvdManager.model.Director;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.service.DirectorService;
 import com.example.DvdManager.DvdManager.service.FilmService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,17 +23,13 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/film")
+@RequiredArgsConstructor
 public class FilmController {
 
     private final FilmService filmService;
     private final FilmDTOMapper filmDTOMapper;
     private final DirectorService directorService;
 
-    public FilmController(FilmService filmService, DirectorService directorService) {
-        this.filmService = filmService;
-        this.directorService = directorService;
-        filmDTOMapper = new FilmDTOMapper();
-    }
     @GetMapping("/all")
     public ResponseEntity<List<FilmDTO>> getAllFilms() {
         List<FilmDTO> films = filmService.findAllFilms();
@@ -52,7 +49,7 @@ public class FilmController {
     }
 
     @GetMapping("/{filmId}")
-    public ResponseEntity<FilmDTO> getFilmByFilm(@PathVariable("filmId") Long filmId) {
+    public ResponseEntity<FilmDTO> getFilmByFilmId(@PathVariable("filmId") Long filmId) {
         FilmDTO filmToSHow = filmDTOMapper.apply(filmService.findFilmById(filmId));
         return new ResponseEntity<>(filmToSHow, HttpStatus.OK);
     }

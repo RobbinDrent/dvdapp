@@ -2,6 +2,7 @@ package com.example.DvdManager.DvdManager.service;
 
 import com.example.DvdManager.DvdManager.dto.DiscDTO;
 import com.example.DvdManager.DvdManager.exception.DiscNotFoundException;
+import com.example.DvdManager.DvdManager.exception.FilmNotFoundException;
 import com.example.DvdManager.DvdManager.mapper.DiscDTOMapper;
 import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
@@ -46,8 +47,10 @@ public class DiscService {
         discRepository.save(disc);
    }
 
-   public List<DiscDTO> getDiscsOfMovie(Film film) {
-       return discRepository.findDiscsByFilm(film)
+   public List<DiscDTO> getDiscsOfMovie(Long filmId) {
+        Film film = filmRepository.findById(filmId).orElseThrow(() ->
+                new FilmNotFoundException("Film met id " + filmId + " niet gevonden!"));
+        return discRepository.findDiscsByFilm(film)
                .stream()
                .map(discDTOMapper)
                .toList();

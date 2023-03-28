@@ -55,7 +55,7 @@ public class FilmService {
     }
 
     public Film findFilmById(Long filmId) {
-        Film film =  filmRepository.findById(filmId).orElseThrow(() ->
+        Film film =  filmRepository.findByFilmId(filmId).orElseThrow(() ->
         new FilmNotFoundException("Film met id " + filmId + " niet gevonden."));
         film.setDisplayTitle();
         return film;

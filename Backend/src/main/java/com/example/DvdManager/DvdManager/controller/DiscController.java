@@ -43,8 +43,8 @@ public class DiscController {
     }
 
     @GetMapping("/film/{filmId}")
-    public ResponseEntity<List<DiscDTO>> getDiscsOfMovie(@PathVariable("filmdId") Film film) {
-        List<DiscDTO> discs = discService.getDiscsOfMovie(film);
+    public ResponseEntity<List<DiscDTO>> getDiscsOfMovie(@PathVariable("filmId") Long filmId) {
+        List<DiscDTO> discs = discService.getDiscsOfMovie(filmId);
         return new ResponseEntity<>(discs, HttpStatus.OK);
     }
 
