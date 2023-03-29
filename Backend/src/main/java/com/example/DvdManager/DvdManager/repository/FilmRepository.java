@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface FilmRepository extends JpaRepository<Film, Long> {
 
-    List<Film> findFilmsByDirector(Director director);
+    List<Film> findAllByOrderByDisplayTitle();
+    List<Film> findFilmsByDirectorOrderByReleaseYear(Director director);
     Optional<Film> findByFilmId(Long filmId);
 }

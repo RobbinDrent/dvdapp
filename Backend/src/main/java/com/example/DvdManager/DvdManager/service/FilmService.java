@@ -44,7 +44,7 @@ public class FilmService {
     }
 
     public List<FilmDTO> findAllFilms() {
-        List<Film> films = filmRepository.findAll();
+        List<Film> films = filmRepository.findAllByOrderByDisplayTitle();
         for (Film film : films) {
             film.setDisplayTitle();
         }
@@ -73,7 +73,7 @@ public class FilmService {
     }
 
     public List<FilmDTO> findFilmsByDirector(Director director) {
-        return filmRepository.findFilmsByDirector(director)
+        return filmRepository.findFilmsByDirectorOrderByReleaseYear(director)
                 .stream()
                 .map(filmDTOMapper)
                 .toList();

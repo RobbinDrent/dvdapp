@@ -26,7 +26,7 @@ public class DirectorService {
     private final DirectorDTOMapper directorDTOMapper;
 
     public List<DirectorDTO> findAllDirectors() {
-        return directorRepository.findAll()
+        return directorRepository.findAllByOrderByLastName()
                 .stream()
                 .map(directorDTOMapper)
                 .toList();
