@@ -8,6 +8,7 @@ import com.example.DvdManager.DvdManager.mapper.DirectorDTOMapper;
 import com.example.DvdManager.DvdManager.model.Director;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.repository.DirectorRepository;
+import com.example.DvdManager.DvdManager.repository.FilmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class DirectorService {
     private final DirectorRepository directorRepository;
     private final DirectorDTOMapper directorDTOMapper;
 
+    private final FilmRepository filmRepository;
+
     public List<DirectorDTO> findAllDirectors() {
         return directorRepository.findAllByOrderByLastName()
                 .stream()
@@ -40,7 +43,6 @@ public class DirectorService {
     public Director findDirectorByDirectorId(Long directorId) {
         Director director =  directorRepository.findById(directorId).orElseThrow(() ->
         new DirectorNotFoundException("Regisseur met id " + directorId + " niet gevonden."));
-//        director.setDisplayName();
         return director;
     }
 
@@ -48,4 +50,5 @@ public class DirectorService {
         director.getFilms().add(film);
         directorRepository.save(director);
     }
+
 }

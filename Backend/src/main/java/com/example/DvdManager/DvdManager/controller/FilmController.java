@@ -7,6 +7,7 @@ import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.service.DirectorService;
 import com.example.DvdManager.DvdManager.service.FilmService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -58,5 +59,12 @@ public class FilmController {
     public ResponseEntity<List<FilmDTO>> getFilmsByDirectorId(@PathVariable("directorId") Director director ) {
         List<FilmDTO> films = filmService.findFilmsByDirector(director);
         return new ResponseEntity<>(films, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{filmId}")
+    public ResponseEntity<String> deleteFilmbyFilmId(@PathVariable("filmId") Long filmId ) {
+        filmService.deleteFilmByFilmId(filmId);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 }

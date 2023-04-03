@@ -8,7 +8,7 @@ import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.repository.DiscRepository;
 import com.example.DvdManager.DvdManager.repository.FilmRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,21 +19,14 @@ import java.util.List;
  * Dit is wat het programma doet.
  */
 @Service
+@RequiredArgsConstructor
 public class DiscService {
-    
+
     private final DiscRepository discRepository;
     private final DiscDTOMapper discDTOMapper;
     private final FilmService filmService;
 
     private final FilmRepository filmRepository;
-
-    @Autowired
-    public DiscService(DiscRepository discRepository, DiscDTOMapper discDTOMapper, FilmService filmService, FilmRepository filmRepository) {
-        this.discRepository = discRepository;
-        this.discDTOMapper = discDTOMapper;
-        this.filmService = filmService;
-        this.filmRepository = filmRepository;
-    }
 
    public List<DiscDTO> findAllDiscs() {
         return discRepository.findAll()

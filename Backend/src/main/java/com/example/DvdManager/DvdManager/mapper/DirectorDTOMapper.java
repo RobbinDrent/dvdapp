@@ -2,6 +2,7 @@ package com.example.DvdManager.DvdManager.mapper;
 
 import com.example.DvdManager.DvdManager.dto.DirectorDTO;
 import com.example.DvdManager.DvdManager.model.Director;
+import com.example.DvdManager.DvdManager.service.DirectorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class DirectorDTOMapper implements Function<Director, DirectorDTO> {
                 director.getDirectorId(),
                 director.getFirstName(),
                 director.getLastName(),
-                director.getCountry()
+                director.getCountry(),
+                director.getFilms().size()
         );
     }
 

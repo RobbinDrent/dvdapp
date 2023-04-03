@@ -83,4 +83,10 @@ public class FilmService {
         film.getDiscs().add(disc);
         filmRepository.save(film);
     }
+
+    public void deleteFilmByFilmId(Long filmId) {
+        if (filmRepository.findById(filmId).isPresent()) {
+            filmRepository.deleteById(filmId);
+        }
+    }
 }

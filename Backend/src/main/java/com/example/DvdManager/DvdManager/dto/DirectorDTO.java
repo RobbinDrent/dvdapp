@@ -10,6 +10,8 @@ public record DirectorDTO(
         Long directorId,
         String firstname,
         String lastname,
-        String country
+        String country,
+
+        int numberOfFilms
     ){
 }
