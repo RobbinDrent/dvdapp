@@ -20,8 +20,7 @@ import java.util.function.Function;
 public class DiscDTOMapper implements Function<Disc, DiscDTO> {
 
 
-    private final FilmService filmService;
-
+    private final FilmRepository filmRepository;
     @Override
     public DiscDTO apply(Disc disc) {
         return new DiscDTO(
@@ -38,7 +37,7 @@ public class DiscDTOMapper implements Function<Disc, DiscDTO> {
                 discDTO.discId(),
                 discDTO.distributor(),
                 discDTO.format(),
-                filmService.findFilmById(discDTO.filmId())
+                filmRepository.findById(discDTO.filmId()).get()
         );
     }
 }

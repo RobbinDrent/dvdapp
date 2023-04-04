@@ -53,7 +53,7 @@ public class DiscService {
         Film film = filmService.findFilmById(filmId);
         disc.setFilm(film);
         discRepository.save(disc);
-        filmService.addDiscToFilm(disc, film);
+//        filmService.addDiscToFilm(disc, film);
     }
 
     public Disc getDiscById(Long discId) {
@@ -65,5 +65,13 @@ public class DiscService {
 
     public void deleteDisc(Long discId) {
         discRepository.deleteById(discId);
+    }
+
+    public void deleteAllDiscsOfFilm(Film film) {
+       List<Disc> discsToRemove = discRepository.findDiscsByFilm(film);
+        for (Disc disc : discsToRemove) {
+            discRepository.delete(disc);
+        }
+
     }
 }

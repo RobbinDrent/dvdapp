@@ -8,10 +8,12 @@ import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.repository.DiscRepository;
 import com.example.DvdManager.DvdManager.repository.FilmRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Robbin Drent <r.v.drent@st.hanze.nl>
@@ -20,6 +22,7 @@ import java.util.List;
  */
 
 @Service
+@RequiredArgsConstructor
 public class FilmService {
 
     private final FilmRepository filmRepository;
@@ -27,13 +30,6 @@ public class FilmService {
     private final DirectorService directorService;
     private final DiscRepository discRepository;
 
-    @Autowired
-    public FilmService(FilmRepository filmRepository, FilmDTOMapper filmDTOMapper, DirectorService directorService, DiscRepository discRepository) {
-        this.filmRepository = filmRepository;
-        this.filmDTOMapper = filmDTOMapper;
-        this.directorService = directorService;
-        this.discRepository = discRepository;
-    }
 
     public Film addFilm(FilmDTO filmDTO) {
         Film film = filmDTOMapper.toFilm(filmDTO);
@@ -79,14 +75,23 @@ public class FilmService {
                 .toList();
     }
 
-    public void addDiscToFilm(Disc disc, Film film) {
-        film.getDiscs().add(disc);
-        filmRepository.save(film);
-    }
+//    public void addDiscToFilm(Disc disc, Film film) {
+//        film.getDiscs().add(disc);
+//        filmRepository.save(film);
+//    }
 
     public void deleteFilmByFilmId(Long filmId) {
-        if (filmRepository.findById(filmId).isPresent()) {
+        Optional<Film> filmToRemove = filmRepository.findById(filmId);
+        if (filmToRemove.isPresent()) {
+            List<Disc> discsToRemove = discRepository.findDiscsByFilm(filmToRemove.get());
+            for (Disc disc : discsToRemove) {
+                discRepository.delete(disc);
+            }
             filmRepository.deleteById(filmId);
         }
     }
+
+//    public void removeDiscFromFilm(Long discId, Film film) {
+//        film.getDiscs().remove(discRepository.findById(discId));
+//    }
 }

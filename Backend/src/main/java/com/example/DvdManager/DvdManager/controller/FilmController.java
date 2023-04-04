@@ -3,8 +3,10 @@ package com.example.DvdManager.DvdManager.controller;
 import com.example.DvdManager.DvdManager.dto.FilmDTO;
 import com.example.DvdManager.DvdManager.mapper.FilmDTOMapper;
 import com.example.DvdManager.DvdManager.model.Director;
+import com.example.DvdManager.DvdManager.model.Disc;
 import com.example.DvdManager.DvdManager.model.Film;
 import com.example.DvdManager.DvdManager.service.DirectorService;
+import com.example.DvdManager.DvdManager.service.DiscService;
 import com.example.DvdManager.DvdManager.service.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
@@ -14,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Robbin Drent <r.v.drent@st.hanze.nl>
@@ -30,6 +33,7 @@ public class FilmController {
     private final FilmService filmService;
     private final FilmDTOMapper filmDTOMapper;
     private final DirectorService directorService;
+    private final DiscService discService;
 
     @GetMapping("/all")
     public ResponseEntity<List<FilmDTO>> getAllFilms() {
@@ -63,6 +67,15 @@ public class FilmController {
 
     @DeleteMapping("/delete/{filmId}")
     public ResponseEntity<String> deleteFilmbyFilmId(@PathVariable("filmId") Long filmId ) {
+        Film filmToDelete = filmService.findFilmById(filmId);
+//        System.out.println("gehakt");
+//        for (Disc disc : filmToDelete.getDiscs()) {
+//            filmService.removeDiscFromFilm(disc.getDiscId(), filmToDelete);
+//            discService.deleteDisc(disc.getDiscId());
+//        }
+//        for (Disc disc : filmToDelete.getDiscs()) {
+//            System.out.println("pasta");
+//        }
         filmService.deleteFilmByFilmId(filmId);
         return new ResponseEntity<>(HttpStatus.OK);
 

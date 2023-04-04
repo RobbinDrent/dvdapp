@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,7 @@ public class Director {
     private String country;
 
     @OneToMany(mappedBy = "director")
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private List<Film> films;
 
 

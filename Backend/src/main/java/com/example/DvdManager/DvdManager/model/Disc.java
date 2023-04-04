@@ -1,13 +1,12 @@
 package com.example.DvdManager.DvdManager.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * @author Robbin Drent <r.v.drent@st.hanze.nl>
@@ -25,6 +24,7 @@ public class Disc {
     private String distributor;
     private String format;
     @ManyToOne
+    @Cascade(CascadeType.ALL)
     private Film film;
 
     public Disc(String distributor, String format, Film film) {

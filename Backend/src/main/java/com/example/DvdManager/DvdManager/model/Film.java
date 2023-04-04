@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 import java.util.Set;
@@ -29,11 +31,9 @@ public class Film {
 
     private String displayTitle;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Cascade({CascadeType.PERSIST})
     private Director director;
-
-    @ManyToMany
-    private List<Disc> discs;
 
     public void setDisplayTitle () {
         String tempString = this.title;
