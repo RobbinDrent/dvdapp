@@ -26,7 +26,7 @@ public class DiscDTOMapper implements Function<Disc, DiscDTO> {
         return new DiscDTO(
                 disc.getDiscId(),
                 disc.getFilm().getFilmId(),
-                disc.getFormat(),
+                disc.isDvd(),
                 disc.getDistributor(),
                 disc.getFilm().getTitle()
         );
@@ -36,7 +36,7 @@ public class DiscDTOMapper implements Function<Disc, DiscDTO> {
         return new Disc(
                 discDTO.discId(),
                 discDTO.distributor(),
-                discDTO.format(),
+                discDTO.isDvd(),
                 filmRepository.findById(discDTO.filmId()).get()
         );
     }

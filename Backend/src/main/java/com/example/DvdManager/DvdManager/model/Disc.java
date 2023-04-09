@@ -22,17 +22,8 @@ public class Disc {
     @GeneratedValue
     private Long discId;
     private String distributor;
-    private String format;
+    private boolean isDvd;
     @ManyToOne
     @Cascade(CascadeType.ALL)
     private Film film;
-
-    public Disc(String distributor, String format, Film film) {
-        this.distributor = distributor;
-        this.format = format;
-        this.film = film;
-
-    }
-
-
 }

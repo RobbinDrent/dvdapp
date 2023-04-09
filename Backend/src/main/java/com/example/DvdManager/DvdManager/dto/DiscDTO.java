@@ -14,7 +14,7 @@ import java.util.List;
 public record DiscDTO (
         Long discId,
         Long filmId,
-        String format,
+        boolean isDvd,
         String distributor,
         String filmTitle
 ) {
